@@ -4,7 +4,7 @@ import Fab from "@material-ui/core/Fab";
 import Zoom from "@material-ui/core/Zoom";
 
 function CreateArea(props) {
-  const [click, setClicked] = useState(false);
+  const [mouseHover, setMouseHover] = useState(false);
 
   const [note, setNote] = useState({
     title: "",
@@ -31,29 +31,32 @@ function CreateArea(props) {
     event.preventDefault();
   }
 
-  function clickHandler() {
-    setClicked(true);
+  function mouseEnterHandler() {
+    setMouseHover(true);
+  }
+
+  function mouseLeaveHandler() {
+    setMouseHover(false);
   }
 
   return (
-    <div>
+    <div onMouseEnter={mouseEnterHandler} onMouseLeave={mouseLeaveHandler}>
       <form className="create-note">
         <input
-          style={{ display: click ? "block" : "none" }}
+          style={{ display: mouseHover ? "block" : "none" }}
           name="title"
           onChange={handleChange}
           value={note.title}
           placeholder="Title"
         />
         <textarea
-          onClick={clickHandler}
           name="content"
           onChange={handleChange}
           value={note.content}
           placeholder="Create a Note..."
-          rows={click ? 3 : 1}
+          rows={mouseHover ? 3 : 1}
         />
-        <Zoom in={click}>
+        <Zoom in={mouseHover}>
           <Fab onClick={submitNote}>
             <AddIcon />
           </Fab>
